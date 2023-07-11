@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "react-native-1-english-words",
+    "slug": "react-native-1-english-words"
+  }
+}
