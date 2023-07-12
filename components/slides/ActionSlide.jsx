@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import MovieCard from "./MovieCard";
-import { useState } from "react";
+import useFetch from "../../hooks/useFetch";
 import { FONT, SIZES, COLORS } from "../../constants";
 
 const ActionSlide = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const { data, isLoading, error } = useFetch("titles/x/upcoming", {
+    page: "1",
+  });
+  console.log(data);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Action</Text>
+        <Text style={styles.headerTitle}>Upcoming</Text>
         <TouchableOpacity>
           <Text style={styles.headerBtn}>Show all</Text>
         </TouchableOpacity>
@@ -29,7 +31,7 @@ const ActionSlide = () => {
           <Text>Something went wrong</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+            data={data.results}
             renderItem={({ item }) => <MovieCard item={item} />}
             keyExtractor={(item) => item.index}
             contentContainerStyle={{ columnGap: SIZES.medium }}
