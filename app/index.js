@@ -3,6 +3,7 @@ import { Stack, useRouter } from "expo-router";
 import { COLORS, SIZES } from "../constants/theme";
 import Welcome from "../components/Welcome";
 import HomeSlide from "../components/slides/HomeSlide";
+import SearchInput from "../components/SearchInput";
 
 const Home = () => {
   const router = useRouter();
@@ -16,14 +17,19 @@ const Home = () => {
           headerTitle: "",
         }}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+
+      <ScrollView
+        stickyHeaderIndices={[1]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Welcome />
+        <SearchInput />
         <View
           style={{
             flex: 1,
             padding: SIZES.medium,
           }}
         >
-          <Welcome />
           <HomeSlide title="Upcoming" />
           <HomeSlide title="Top rated movies" />
           <HomeSlide title="Top rated series" />
