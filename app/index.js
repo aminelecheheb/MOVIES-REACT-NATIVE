@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { COLORS, SIZES } from "../constants/theme";
 import Welcome from "../components/Welcome";
-import ActionSlide from "../components/slides/ActionSlide";
+import ActionSlide from "../components/slides/HomeSlide";
 
 const Home = () => {
   const router = useRouter();

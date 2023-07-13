@@ -10,11 +10,11 @@ import MovieCard from "./MovieCard";
 import useFetch from "../../hooks/useFetch";
 import { FONT, SIZES, COLORS } from "../../constants";
 
-const ActionSlide = () => {
+const HomeSlide = () => {
   const { data, isLoading, error } = useFetch("titles/x/upcoming", {
     page: "1",
   });
-  console.log(data);
+  // console.log(data.results[0]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,7 +33,7 @@ const ActionSlide = () => {
           <FlatList
             data={data.results}
             renderItem={({ item }) => <MovieCard item={item} />}
-            keyExtractor={(item) => item.index}
+            keyExtractor={(item) => item._id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
           />
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActionSlide;
+export default HomeSlide;
