@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { COLORS, SIZES } from "../constants/theme";
 import Welcome from "../components/Welcome";
-import ActionSlide from "../components/slides/HomeSlide";
+import HomeSlide from "../components/slides/HomeSlide";
 
 const Home = () => {
   const router = useRouter();
@@ -24,7 +24,10 @@ const Home = () => {
           }}
         >
           <Welcome />
-          <ActionSlide />
+          <HomeSlide title="Upcoming" />
+          <HomeSlide title="Top rated movies" />
+          <HomeSlide title="Top rated series" />
+          <HomeSlide title="Most popular movies" />
         </View>
       </ScrollView>
     </SafeAreaView>
