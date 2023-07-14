@@ -9,8 +9,10 @@ import {
 import MovieCard from "./MovieCard";
 import useFetch from "../../hooks/useFetch";
 import { FONT, SIZES, COLORS } from "../../constants";
+import { useRouter } from "expo-router";
 
 const HomeSlide = ({ title }) => {
+  const router = useRouter();
   let endpoint;
   let query;
   switch (title) {

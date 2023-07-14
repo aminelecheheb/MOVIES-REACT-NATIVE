@@ -1,13 +1,21 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+
 const MovieCard = ({ item }) => {
-  let year, month, day;
+  const router = useRouter();
+  // let year, month, day;
   item.releaseDate
     ? ({ day, month, year } = item.releaseDate)
     : item.releaseYear
     ? ({ year } = item.releaseYear)
     : "N/A";
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        router.push(`/details/${item.id}`);
+      }}
+    >
       <Image
         source={{
           uri: !item.primaryImage
@@ -19,7 +27,9 @@ const MovieCard = ({ item }) => {
       />
       <Text>{item.titleText.text ?? "Title"}</Text>
       <Text style={{ fontWeight: "bold" }}>
-        {`${day ?? ""}-${month ?? ""}-${year ?? "N/A"}`}
+        {item.releaseDate?.day && `${item.releaseDate.day}-`}
+        {item.releaseDate?.month && `${item.releaseDate.month}-`}
+        {item.releaseDate?.year ?? `${item.releaseYear.year}`}
       </Text>
     </TouchableOpacity>
   );
