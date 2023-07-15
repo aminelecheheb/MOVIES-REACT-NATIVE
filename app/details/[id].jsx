@@ -20,7 +20,7 @@ const detailsPage = () => {
   });
 
   let item = data.results;
-  item && console.log(item);
+  // item && console.log(item);
 
   const isSerie = item?.titleType?.isSeries;
 
@@ -55,7 +55,7 @@ const detailsPage = () => {
         <Text>Something went wrong</Text>
       ) : (
         item && (
-          <ScrollView>
+          <ScrollView style={{ backgroundColor: COLORS.lightWhite }}>
             <View style={styles.imageContainer}>
               <Image
                 source={{

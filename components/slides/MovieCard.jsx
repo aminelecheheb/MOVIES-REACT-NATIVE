@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { COLORS, SHADOWS } from "../../constants";
 
-const MovieCard = ({ item }) => {
+const MovieCard = ({ item, category }) => {
   const router = useRouter();
   // let year, month, day;
   item.releaseDate
@@ -11,7 +12,7 @@ const MovieCard = ({ item }) => {
     : "N/A";
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={styles.container(category)}
       onPress={() => {
         router.push(`/details/${item.id}`);
       }}
@@ -25,20 +26,26 @@ const MovieCard = ({ item }) => {
         resizeMode="contain"
         style={styles.movieImage}
       />
-      <Text>{item.titleText.text ?? "Title"}</Text>
-      <Text style={{ fontWeight: "bold" }}>
-        {item.releaseDate?.day && `${item.releaseDate.day}-`}
-        {item.releaseDate?.month && `${item.releaseDate.month}-`}
-        {item.releaseDate?.year ?? `${item.releaseYear.year}`}
-      </Text>
+      <View style={{ paddingHorizontal: 15 }}>
+        <Text>{item.titleText.text ?? "Title"}</Text>
+        <Text style={{ fontWeight: "bold" }}>
+          {item.releaseDate?.day && `${item.releaseDate.day}-`}
+          {item.releaseDate?.month && `${item.releaseDate.month}-`}
+          {item.releaseDate?.year ?? `${item.releaseYear.year}`}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: 200,
-  },
+  container: (category) => ({
+    width: category ? 300 : 200,
+    padding: category ? 20 : 0,
+    // backgroundColor: COLORS.lightWhite,
+    // marginBottom: category ? 16 : 0,
+  }),
+
   movieImage: {
     width: "100%",
     aspectRatio: 3 / 4,

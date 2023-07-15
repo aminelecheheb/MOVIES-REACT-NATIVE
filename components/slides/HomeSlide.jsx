@@ -48,11 +48,16 @@ const HomeSlide = ({ title }) => {
   }
   const { data, isLoading, error } = useFetch(endpoint, query);
   // console.log(data);
+
+  const handleShowAll = () => {
+    router.push(`/category/${title}`);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{title}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleShowAll}>
           <Text style={styles.headerBtn}>Show all</Text>
         </TouchableOpacity>
       </View>
