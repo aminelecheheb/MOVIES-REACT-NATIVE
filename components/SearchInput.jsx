@@ -4,25 +4,68 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Text,
+  FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { COLORS, SIZES, FONT, icons } from "../constants";
-const SearchInput = () => {
-  return (
-    <View style={styles.searchContainer}>
-      <View style={styles.searchWrapper}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="What are you looking for?"
-        />
-      </View>
+import useFetch from "../hooks/useFetch";
+import { useRouter } from "expo-router";
 
-      <TouchableOpacity style={styles.searchBtn}>
-        <Image
-          source={icons.search}
-          resizeMode="contain"
-          style={styles.searchBtnImage}
-        />
-      </TouchableOpacity>
+const GenreTab = ({ item }) => {
+  const router = useRouter();
+
+  const showGenre = () => {
+    router.push(`genre/${item}`);
+  };
+
+  return (
+    <TouchableOpacity style={styles.genreTab} onPress={showGenre}>
+      <Text>{item}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const SearchInput = () => {
+  const { data, isLoading, error } = useFetch("titles/utils/genres");
+
+  return (
+    <View>
+      <View style={styles.searchContainer}>
+        <View style={styles.searchWrapper}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="What are you looking for?"
+          />
+        </View>
+
+        <TouchableOpacity style={styles.searchBtn}>
+          <Image
+            source={icons.search}
+            resizeMode="contain"
+            style={styles.searchBtnImage}
+          />
+        </TouchableOpacity>
+      </View>
+      <View>
+        {isLoading ? (
+          <ActivityIndicator size="large" color={COLORS.primary} />
+        ) : error ? (
+          <Text>Something went wrong</Text>
+        ) : (
+          data.results && (
+            <View style={styles.tabContainer}>
+              <FlatList
+                data={data.results.slice(1)}
+                renderItem={({ item }) => <GenreTab item={item} />}
+                keyExtractor={(item) => item.index}
+                contentContainerStyle={{ columnGap: SIZES.medium }}
+                horizontal
+              />
+            </View>
+          )
+        )}
+      </View>
     </View>
   );
 };
@@ -65,6 +108,18 @@ const styles = StyleSheet.create({
     width: "50%",
     height: "50%",
     tintColor: COLORS.white,
+  },
+
+  tabContainer: {
+    backgroundColor: COLORS.lightWhite,
+    padding: SIZES.medium,
+  },
+
+  genreTab: {
+    backgroundColor: COLORS.gray2,
+    paddingHorizontal: SIZES.small,
+    paddingVertical: 5,
+    borderRadius: 50,
   },
 });
 

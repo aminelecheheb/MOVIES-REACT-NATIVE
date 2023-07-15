@@ -1,6 +1,5 @@
 import {
   SafeAreaView,
-  ScrollView,
   View,
   StyleSheet,
   ActivityIndicator,
@@ -13,49 +12,21 @@ import { useState } from "react";
 import MovieCard from "../../components/slides/MovieCard";
 import { SIZES, COLORS, FONT } from "../../constants";
 import Pagination from "../../components/Pagination";
-import { useEffect } from "react";
 
 const Category = () => {
   const [page, setPage] = useState(1);
   const params = useSearchParams();
 
-  let endpoint;
-  let query;
-  switch (params.category) {
-    case "Upcoming":
-      endpoint = "titles/x/upcoming";
-      query = {
-        page: page,
-      };
-      break;
-    case "Top rated movies":
-      endpoint = "titles";
-      query = {
-        list: "top_rated_english_250",
-        sort: "year.decr",
-        page: page,
-      };
-      break;
-    case "Top rated series":
-      endpoint = "titles";
-      query = {
-        list: "top_rated_series_250",
-        sort: "year.decr",
-        page: page,
-      };
-      break;
-    case "Most popular movies":
-      endpoint = "titles";
-      query = {
-        list: "most_pop_movies",
-        sort: "year.decr",
-        page: page,
-      };
-      break;
-    default:
-      break;
-  }
-  const { data, isLoading, error } = useFetch(endpoint, query, [page]);
+  const { data, isLoading, error } = useFetch(
+    "titles",
+    {
+      genre: params.genre,
+      list: "most_pop_movies",
+      sort: "year.decr",
+      page: page,
+    },
+    [page]
+  );
 
   return (
     <SafeAreaView>
