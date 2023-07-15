@@ -11,6 +11,7 @@ import {
 import { COLORS, SIZES, FONT, icons } from "../constants";
 import useFetch from "../hooks/useFetch";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 
 const GenreTab = ({ item }) => {
   const router = useRouter();
@@ -27,7 +28,12 @@ const GenreTab = ({ item }) => {
 };
 
 const SearchInput = () => {
+  const router = useRouter();
+  const handleSearch = () => {
+    router.push(`search/${searchKey}`);
+  };
   const { data, isLoading, error } = useFetch("titles/utils/genres");
+  const [searchKey, setSearchKey] = useState("");
 
   return (
     <View>
@@ -36,10 +42,17 @@ const SearchInput = () => {
           <TextInput
             style={styles.searchInput}
             placeholder="What are you looking for?"
+            value={searchKey}
+            onChangeText={(text) => setSearchKey(text)}
           />
         </View>
 
-        <TouchableOpacity style={styles.searchBtn}>
+        <TouchableOpacity
+          style={styles.searchBtn}
+          onPress={() => {
+            handleSearch(searchKey);
+          }}
+        >
           <Image
             source={icons.search}
             resizeMode="contain"
