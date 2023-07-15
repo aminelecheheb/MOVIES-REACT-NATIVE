@@ -12,9 +12,14 @@ import { useSearchParams, Stack } from "expo-router";
 import { useState } from "react";
 import MovieCard from "../../components/slides/MovieCard";
 import { SIZES, COLORS, FONT } from "../../constants";
+import Pagination from "../../components/Pagination";
+import { useEffect } from "react";
 
 const Category = () => {
   const [page, setPage] = useState(1);
+  //   const [items, setItems] = useState({});
+  //   const [isLoading, setIsLoading] = useState(false);
+  //   const [isErrorTrue, setIsErrorTrue] = useState(false);
   const params = useSearchParams();
   let endpoint;
   let query;
@@ -52,8 +57,8 @@ const Category = () => {
     default:
       break;
   }
-  const { data, isLoading, error } = useFetch(endpoint, query);
-  data && console.log(data);
+
+  const { data, isLoading, error } = useFetch(endpoint, query, [page]);
 
   return (
     <SafeAreaView>
@@ -79,6 +84,13 @@ const Category = () => {
             />
           )}
         </View>
+        {!isLoading && !error && (
+          <Pagination
+            page={page}
+            setPage={setPage}
+            num={data?.results?.length}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -93,6 +105,7 @@ const styles = StyleSheet.create({
     marginTop: SIZES.medium,
     width: "100%",
     alignItems: "center",
+    paddingBottom: 60,
   },
 });
 
